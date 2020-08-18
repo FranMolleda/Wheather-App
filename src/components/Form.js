@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 
-const Form = () => {
-  const [search, setSearch] = useState({
-    city: "",
-    country: "",
-  });
+const Form = ({ search, setSearch, setQuery }) => {
+  const [error, setError] = useState(false);
 
   const { country, city } = search;
 
-  console.log(search);
   const handleChange = (e) => {
     setSearch({ ...search, [e.target.name]: e.target.value });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (city.trim() === "" || country.trim() === "") {
+      setError(true);
+      return;
+    }
+    setError(false);
+
+    setQuery(true);
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      {error ? (
+        <p className="red darken-4 error">Todos los campos son obligatorios </p>
+      ) : null}
       <div className="input-field col s12">
         <input
           type="text"
@@ -41,6 +52,13 @@ const Form = () => {
           <option value="PE">Perú</option>
         </select>
         <label htmlFor="country">Country: </label>
+      </div>
+      <div className="input-field col s12">
+        <input
+          type="submit"
+          value="buscar clima"
+          className="waves-effect waves-light btn-large btn-block yellow accent-4"
+        />
       </div>
     </form>
   );
