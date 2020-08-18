@@ -9,16 +9,23 @@ function App() {
 
   const [query, setQuery] = useState(false);
 
+  const [result, setResult] = useState({});
   const { city, country } = search;
 
   useEffect(() => {
-    if (query) {
-      console.log(city, country);
-    }
-    setQuery(false);
+    const apiQuery = async () => {
+      if (query) {
+        const appId = "858e38f9b915599bbac09d708c049f6a";
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${appId}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        setResult(result);
+      }
+      setQuery(false);
+    };
+    apiQuery();
   }, [query]);
 
-  console.log(search);
   return (
     <Fragment>
       <Header title="Clima React app" />
