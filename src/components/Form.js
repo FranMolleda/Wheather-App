@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Form = () => {
+  const [search, setSearch] = useState({
+    city: "",
+    country: "",
+  });
+
+  const { country, city } = search;
+
+  console.log(search);
+  const handleChange = (e) => {
+    setSearch({ ...search, [e.target.name]: e.target.value });
+  };
   return (
     <form>
       <div className="input-field col s12">
-        <input type="text" name="city" id="city" />
+        <input
+          type="text"
+          name="city"
+          id="city"
+          onChange={handleChange}
+          value={city}
+        />
         <label htmlFor="city">City</label>
       </div>
       <div className="input-field col s12">
-        <select name="country" id="country">
+        <select
+          name="country"
+          id="country"
+          onChange={handleChange}
+          value={country}
+        >
           <option value="">-- Select Country --</option>
           <option value="US">Estados Unidos</option>
           <option value="MX">México</option>
