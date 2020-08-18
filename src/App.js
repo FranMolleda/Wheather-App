@@ -1,10 +1,10 @@
-import React from "react";
-
+import React, { Fragment } from "react";
+import Header from "./components/Header";
 function App() {
   return (
-    <div className="App">
-      <h1>Clima</h1>
-    </div>
+    <Fragment>
+      <Header title="Clima React app"></Header>
+    </Fragment>
   );
 }
 
