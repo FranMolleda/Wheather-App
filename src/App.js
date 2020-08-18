@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import Header from "./components/Header";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
+import Error from "./components/Error";
 function App() {
   const [search, setSearch] = useState({
     city: "",
@@ -9,9 +10,9 @@ function App() {
   });
 
   const [query, setQuery] = useState(false);
-
   const [result, setResult] = useState({});
   const { city, country } = search;
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const apiQuery = async () => {
@@ -24,8 +25,22 @@ function App() {
       }
       setQuery(false);
     };
+
+    if (result.cod === "404") {
+      setError(true);
+    } else {
+      setError(false);
+    }
+
     apiQuery();
-  }, [query, city, country]);
+    //eslint-disable-next-line
+  }, [query]);
+  let component;
+  if (error) {
+    component = <Error mensaje="No hay resultados" />;
+  } else {
+    component = <Weather result={result} />;
+  }
 
   return (
     <Fragment>
@@ -36,9 +51,7 @@ function App() {
             <div className="col m6 s12">
               <Form search={search} setSearch={setSearch} setQuery={setQuery} />
             </div>
-            <div className="col m6 s12">
-              <Weather result={result} />
-            </div>
+            <div className="col m6 s12">{component} </div>
           </div>
         </div>
       </div>

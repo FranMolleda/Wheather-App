@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 const Weather = ({ result }) => {
   const { name, main } = result;
   if (!name) return null;
@@ -24,6 +26,10 @@ const Weather = ({ result }) => {
       </div>
     </div>
   );
+};
+
+Weather.propTypes = {
+  result: PropTypes.object.isRequired,
 };
 
 export default Weather;
